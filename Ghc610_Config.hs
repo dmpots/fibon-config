@@ -11,22 +11,22 @@ config = RunConfig {
   , sizeList = [Test, Ref]
   , tuneList = [Base, Peak]
   , iterations = 10
-  , flagsBuilder = flags
+  , configBuilder = build
   }
 
-flags :: FlagBuilder
-flags (ConfigTune Base) ConfigBenchDefault = do
+build :: ConfigBuilder
+build (ConfigTune Base) ConfigBenchDefault = do
   append ConfigureFlags "--disable-optimization"
 
-flags (ConfigTune Base) (ConfigBench Palindromes) = do
+build (ConfigTune Base) (ConfigBench Palindromes) = do
   append RunFlags "+RTS -K256M -RTS"
 
-flags (ConfigTune Base) (ConfigBench TernaryTrees) = do
+build (ConfigTune Base) (ConfigBench TernaryTrees) = do
   append RunFlags "+RTS -K16M -RTS"
 
-flags (ConfigTune Peak) ConfigBenchDefault = do
+build (ConfigTune Peak) ConfigBenchDefault = do
   append ConfigureFlags "--enable-optimization=2"
 
-flags _ _ = do
+build _ _ = do
   done
 
