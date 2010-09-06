@@ -14,8 +14,18 @@ config = RunConfig {
   , configBuilder = build
   }
 
+collectStats :: Bool
+collectStats = False
 
 build :: ConfigBuilder
+build ConfigTuneDefault ConfigBenchDefault = do
+  if collectStats 
+    then do
+    collectExtraStatsFrom  "ghc.stats"
+    append RunFlags "+RTS -tghc.stats --machine-readable"
+    else
+    done
+
 build (ConfigTune Base) ConfigBenchDefault = do
   append ConfigureFlags "--disable-optimization"
 
