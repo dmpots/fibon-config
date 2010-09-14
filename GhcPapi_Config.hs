@@ -3,7 +3,6 @@ module GhcPapi_Config(
 )
 where
 import Fibon.Run.Config
-import System.FilePath
 
 config :: RunConfig
 config = RunConfig {
@@ -25,7 +24,6 @@ build ConfigTuneDefault ConfigBenchDefault = do
 
   if collectStats 
     then do
-    append ConfigureFlags "--ghc-option=-rtsopts"
     collectExtraStatsFrom  "ghc.stats"
     append RunFlags "+RTS -tghc.stats --machine-readable"
     else
