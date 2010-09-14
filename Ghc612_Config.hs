@@ -32,6 +32,9 @@ build (ConfigTune Base) ConfigBenchDefault = do
 build (ConfigTune Base) (ConfigBench Palindromes) = do
   append RunFlags "+RTS -K128M -RTS"
 
+build (ConfigTune Base) (ConfigBench BinaryTrees) = do
+  append RunFlags "+RTS -K32M -RTS"
+
 build (ConfigTune Peak) ConfigBenchDefault = do
   append ConfigureFlags "--enable-optimization=2"
 
