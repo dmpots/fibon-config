@@ -21,10 +21,10 @@ build :: ConfigBuilder
 build ConfigTuneDefault ConfigBenchDefault = do
   setTimeout $ Limit 2 0 0
   useGhcInPlaceDir "/home/dave/ghc-BUILD/ghc-HEAD-BUILD/inplace/bin"
+  append ConfigureFlags "--ghc-option=-rtsopts"
 
   if collectStats 
     then do
-    append ConfigureFlags "--ghc-option=-rtsopts"
     collectExtraStatsFrom  "ghc.stats"
     append RunFlags "+RTS -tghc.stats --machine-readable"
     else
@@ -33,8 +33,14 @@ build ConfigTuneDefault ConfigBenchDefault = do
 build (ConfigTune Base) ConfigBenchDefault = do
   append ConfigureFlags "--disable-optimization"
 
+build (ConfigTune Base) (ConfigBench BinaryTrees) = do
+  append RunFlags "+RTS -K64M -RTS"
+
 build (ConfigTune Base) (ConfigBench Palindromes) = do
-  append RunFlags "+RTS -K128M -RTS"
+  append RunFlags "+RTS -K256M -RTS"
+
+build (ConfigTune Base) (ConfigBench TernaryTrees) = do
+  append RunFlags "+RTS -K16M -RTS"
 
 build (ConfigTune Peak) ConfigBenchDefault = do
   append ConfigureFlags "--enable-optimization=2"
