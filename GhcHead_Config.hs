@@ -19,7 +19,7 @@ collectStats = True
 
 build :: ConfigBuilder
 build ConfigTuneDefault ConfigBenchDefault = do
-  setTimeout $ Limit 2 0 0
+  setTimeout $ Limit 0 10 0
   useGhcInPlaceDir "/home/dave/ghc-BUILD/ghc-HEAD-BUILD/inplace/bin"
   append ConfigureFlags "--ghc-option=-rtsopts"
 
@@ -41,6 +41,9 @@ build (ConfigTune Base) (ConfigBench Palindromes) = do
 
 build (ConfigTune Base) (ConfigBench TernaryTrees) = do
   append RunFlags "+RTS -K16M -RTS"
+
+build (ConfigTuneDefault) (ConfigBench Cpsa) = do
+  append BuildFlags "--ghc-option=-fcontext-stack=42"
 
 build (ConfigTune Peak) ConfigBenchDefault = do
   append ConfigureFlags "--enable-optimization=2"
