@@ -15,7 +15,7 @@ config = RunConfig {
   }
 
 collectStats :: Bool
-collectStats = False
+collectStats = True
 
 build :: ConfigBuilder
 build ConfigTuneDefault ConfigBenchDefault = do
