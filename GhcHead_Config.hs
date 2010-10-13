@@ -20,8 +20,13 @@ collectStats = True
 build :: ConfigBuilder
 build ConfigTuneDefault ConfigBenchDefault = do
   setTimeout $ Limit 0 10 0
-  useGhcInPlaceDir "/home/dave/ghc-BUILD/ghc-HEAD-BUILD/inplace/bin"
   append ConfigureFlags "--ghc-option=-rtsopts"
+
+  -- take the GHC head dir from the environment if set from there
+  mbHead <- getEnv "FIBON_GHC_HEAD"
+  maybe (useGhcInPlaceDir "/home/dave/ghc-BUILD/ghc-HEAD-BUILD/inplace/bin")
+         useGhcInPlaceDir
+         mbHead
 
   if collectStats 
     then do
