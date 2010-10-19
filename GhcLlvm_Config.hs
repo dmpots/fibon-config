@@ -19,11 +19,13 @@ collectStats = True
 
 build :: ConfigBuilder
 build ConfigTuneDefault ConfigBenchDefault = do
-  useGhcInPlaceDir "/home/dave/ghc-BUILD/ghc-HEAD-BUILD/inplace/bin"
-
+  append ConfigureFlags "--ghc-option=-rtsopts"
+  mbHead <- getEnv "FIBON_GHC_HEAD"
+  maybe (useGhcInPlaceDir "/home/dave/ghc-BUILD/ghc-HEAD-BUILD/inplace/bin")
+         useGhcInPlaceDir
+         mbHead
   if collectStats 
     then do
-    append ConfigureFlags "--ghc-option=-rtsopts"
     collectExtraStatsFrom  "ghc.stats"
     append RunFlags "+RTS -tghc.stats --machine-readable"
     else
