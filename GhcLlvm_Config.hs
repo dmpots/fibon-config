@@ -38,4 +38,7 @@ build (ConfigTune Peak) ConfigBenchDefault = do
   append ConfigureFlags "-O2"
   append ConfigureFlags "--ghc-option=-fllvm"
 
+build (ConfigTuneDefault) (ConfigBench Cpsa) = do
+  append BuildFlags "--ghc-option=-fcontext-stack=42"
+
 build _ _ = done
