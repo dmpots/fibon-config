@@ -17,10 +17,24 @@ config = RunConfig {
 collectStats :: Bool
 collectStats = False
 
+standardGHC :: FilePath
+standardGHC = "/Research/darcs/ghc-PAPI.BUILD/inplace/bin"
+
 build :: ConfigBuilder
 build ConfigTuneDefault ConfigBenchDefault = do
-  useGhcInPlaceDir "/home/dave/ghc-BUILD/ghc-PAPI/inplace/bin"
   append ConfigureFlags "--ghc-option=-rtsopts"
+
+  -- Use ghc from standard location off of HOME
+  mbHome <- getEnv "HOME"
+  maybe done
+        (\h -> useGhcInPlaceDir (h ++ standardGHC))
+        mbHome
+
+  -- Use ghc specified from environment
+  mbHead <- getEnv "FIBON_GHC_HEAD"
+  maybe done
+        useGhcInPlaceDir
+        mbHead
 
   if collectStats 
     then do
@@ -37,5 +51,11 @@ build (ConfigTune Base) (ConfigBench Palindromes) = do
 
 build (ConfigTune Peak) ConfigBenchDefault = do
   append ConfigureFlags "--enable-optimization=2"
+
+build (ConfigTuneDefault) (ConfigBench Cpsa) = do
+  append BuildFlags "--ghc-option=-fcontext-stack=42"
+
+build (ConfigTuneDefault) (ConfigBench QuickHull) = do
+  append RunFlags "+RTS -K16M -RTS"
 
 build _ _ = done
