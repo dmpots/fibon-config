@@ -3,16 +3,20 @@ module Ghc610_Config(
 )
 where
 import Fibon.Run.Config
+import Fibon.Benchmarks
 
 config :: RunConfig
 config = RunConfig {
     configId = "ghc610"
-  , runList  = map RunSingle $ filter (/= Gf) allBenchmarks
+  , runList  = map RunSingle (hackage ++ shootout)
   , sizeList = [Test, Ref]
   , tuneList = [Base, Peak]
   , iterations = 10
   , configBuilder = build
   }
+  where
+    shootout = filter (\b -> benchGroup b == Shootout) allBenchmarks
+    hackage  = filter (\b -> benchGroup b == Hackage && b /= Gf) allBenchmarks
 
 build :: ConfigBuilder
 build ConfigTuneDefault ConfigBenchDefault = do
