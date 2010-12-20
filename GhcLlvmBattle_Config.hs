@@ -17,7 +17,7 @@ config = RunConfig {
 
 working, broken :: [FibonBenchmark]
 working = allBenchmarks \\ broken
-broken  = [Funsat, Happy, Dotp, Qsort, QuickHull, Sumsq] 
+broken  = [Funsat, Gf, Happy, Dotp, Qsort, QuickHull, Sumsq]
 
 standardGHC :: FilePath
 standardGHC = "/Research/darcs/ghc-HEAD.BUILD/inplace/bin"
@@ -41,15 +41,15 @@ build ConfigTuneDefault ConfigBenchDefault = do
         useGhcInPlaceDir
         mbHead
 
-build (ConfigTune Base) ConfigBenchDefault = do
   append ConfigureFlags "-O2" -- for GHC high-level optimizations
+  append ConfigureFlags "--ghc-option=-fllvm"
+
+build (ConfigTune Base) ConfigBenchDefault = do
+  --append ConfigureFlags "--ghc-option=-optlo=-disable-opt"
   append ConfigureFlags "--ghc-option=-optlo=-mem2reg"
-  append ConfigureFlags "--ghc-option=-optlo=-instcombine"
-  append ConfigureFlags "--ghc-option=-optlo=-dce"
-  append ConfigureFlags "--ghc-option=-optlc=-O0"
+  append ConfigureFlags "--ghc-option=-optlc=-O1"
 
 build (ConfigTune Peak) ConfigBenchDefault = do
-  append ConfigureFlags "-O2" -- for GHC high-level optimizations
   append ConfigureFlags "--ghc-option=-optlo=-O2"
   append ConfigureFlags "--ghc-option=-optlc=-O2"
 
