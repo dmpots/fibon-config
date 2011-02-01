@@ -44,7 +44,7 @@ build ConfigTuneDefault ConfigBenchDefault = do
   if collectStats 
     then do
     collectExtraStatsFrom  "ghc.stats"
-    append RunFlags "+RTS -tghc.stats --machine-readable"
+    append RunFlags "+RTS -tghc.stats --machine-readable -RTS"
     else
     done
 

@@ -27,7 +27,7 @@ build ConfigTuneDefault ConfigBenchDefault = do
   setTimeout $ Limit 0 10 0
   append ConfigureFlags "--ghc-option=-rtsopts"
   collectExtraStatsFrom  "ghc.stats"
-  append RunFlags "+RTS -tghc.stats --machine-readable"
+  append RunFlags "+RTS -tghc.stats --machine-readable -RTS"
 
   -- Use ghc from standard location off of HOME
   mbHome <- getEnv "HOME"

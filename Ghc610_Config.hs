@@ -22,7 +22,7 @@ build :: ConfigBuilder
 build ConfigTuneDefault ConfigBenchDefault = do
   setTimeout $ Limit 3 0 0
   collectExtraStatsFrom  "ghc.stats"
-  append RunFlags "+RTS -tghc.stats --machine-readable"
+  append RunFlags "+RTS -tghc.stats --machine-readable -RTS"
 
 build (ConfigTune Base) ConfigBenchDefault = do
   append ConfigureFlags "--disable-optimization"
