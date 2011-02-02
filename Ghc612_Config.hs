@@ -8,7 +8,7 @@ config :: RunConfig
 config = RunConfig {
     configId = "ghc612"
   , runList  = [RunGroup Hackage, RunGroup Shootout]
-  , sizeList = [Test, Ref]
+  , sizeList = [Ref]
   , tuneList = [Base, Peak]
   , iterations = 10
   , configBuilder = build
