@@ -18,7 +18,7 @@ collectStats :: Bool
 collectStats = True
 
 standardGHC :: FilePath
-standardGHC = "/Research/darcs/ghc-7.0.BUILD/inplace/bin"
+standardGHC = "/Research/git/ghc/inplace/bin"
 
 build :: ConfigBuilder
 build ConfigTuneDefault ConfigBenchDefault = do
