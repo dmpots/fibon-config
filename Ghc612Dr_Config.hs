@@ -1,4 +1,4 @@
-module Ghc612Dynamo_Config(
+module Ghc612Dr_Config(
   config
 )
 where
