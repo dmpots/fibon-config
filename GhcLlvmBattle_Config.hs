@@ -3,21 +3,16 @@ module GhcLlvmBattle_Config(
 )
 where
 import Fibon.Run.Config
-import Data.List((\\))
 
 config :: RunConfig
 config = RunConfig {
     configId = "llvm-battle"
-  , runList  = map RunSingle working
+  , runList  = map RunSingle allBenchmarks
   , sizeList = [Ref]
   , tuneList = [Base, Peak]
   , iterations = 10
   , configBuilder = build
   }
-
-working, broken :: [FibonBenchmark]
-working = allBenchmarks \\ broken
-broken  = [Funsat, Gf, Happy, Dotp, Qsort, QuickHull, Sumsq]
 
 standardGHC :: FilePath
 standardGHC = "/Research/git/ghc/inplace/bin"
