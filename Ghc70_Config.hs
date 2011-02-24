@@ -10,7 +10,7 @@ config = RunConfig {
   , runList  = map RunSingle allBenchmarks
   , sizeList = [Ref]
   , tuneList = [Base, Peak]
-  , iterations = 100
+  , iterations = 10
   , configBuilder = build
   }
 
@@ -18,7 +18,7 @@ collectStats :: Bool
 collectStats = True
 
 standardGHC :: FilePath
-standardGHC = "/Research/git/ghc/inplace/bin"
+standardGHC = "/ghc-7/bin"
 
 build :: ConfigBuilder
 build ConfigTuneDefault ConfigBenchDefault = do
@@ -28,7 +28,7 @@ build ConfigTuneDefault ConfigBenchDefault = do
   -- Use ghc from standard location off of HOME
   mbHome <- getEnv "HOME"
   maybe done
-        (\h -> useGhcInPlaceDir (h ++ standardGHC))
+        (\h -> useGhcDir (h ++ standardGHC))
         mbHome
 
   -- Use ghc specified from environment
