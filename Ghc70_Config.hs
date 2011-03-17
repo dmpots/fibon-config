@@ -7,7 +7,7 @@ import Fibon.Run.Config
 config :: RunConfig
 config = RunConfig {
     configId = "ghc70"
-  , runList  = map RunSingle allBenchmarks
+  , runList  = map RunGroup [Hackage, Shootout]
   , sizeList = [Ref]
   , tuneList = [Base, Peak]
   , iterations = 10
