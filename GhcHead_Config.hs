@@ -25,7 +25,7 @@ build :: ConfigBuilder
 -- Default Settings for All Benchmarks
 --
 build ConfigTuneDefault ConfigBenchDefault = do
-  setTimeout $ Limit 0 10 0
+  setTimeout $ Limit 0 90 0
   append ConfigureFlags "--ghc-option=-rtsopts"
 
   -- Use ghc from standard location off of HOME
