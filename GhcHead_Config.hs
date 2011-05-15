@@ -10,7 +10,7 @@ config = RunConfig {
   , runList  = map RunSingle allBenchmarks
   , sizeList = [Ref]
   , tuneList = [Base, Peak]
-  , iterations = 100
+  , iterations = 3
   , configBuilder = build
   }
 
