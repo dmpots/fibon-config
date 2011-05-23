@@ -19,7 +19,7 @@ standardGHC = "/Research/git/ghc/inplace/bin"
 
 build :: ConfigBuilder
 build ConfigTuneDefault ConfigBenchDefault = do
-  setTimeout $ Limit 0 10 0
+  setTimeout $ Limit 1 0 0
   append ConfigureFlags "--ghc-option=-rtsopts"
   collectExtraStatsFrom  "ghc.stats"
   append RunFlags "+RTS -tghc.stats --machine-readable -RTS"
