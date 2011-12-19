@@ -3,6 +3,8 @@ module GhcHead_Config(
 )
 where
 import Fibon.Run.Config
+import Control.Monad(when)
+import Data.Maybe(isJust)
 
 config :: RunConfig
 config = RunConfig {
@@ -28,18 +30,19 @@ build ConfigTuneDefault ConfigBenchDefault = do
   setTimeout $ Limit 0 90 0
   append ConfigureFlags "--ghc-option=-rtsopts"
 
-  -- Use ghc from standard location off of HOME
-  mbHome <- getEnv "HOME"
-  maybe done
-        (\h -> useGhcInPlaceDir (h ++ standardGHC))
-        mbHome
-
   -- Use ghc specified from environment
   mbHead <- getEnv "FIBON_GHC"
   maybe done
         useGhcInPlaceDir
         mbHead
   
+  -- Use ghc from standard location off of HOME otherwise
+  when (not (isJust mbHead)) $ do
+    mbHome <- getEnv "HOME"
+    maybe done
+          (\h -> useGhcInPlaceDir (h ++ standardGHC))
+          mbHome
+
   -- Setup stats collection 
   if collectStats 
     then do
