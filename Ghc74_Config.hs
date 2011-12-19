@@ -8,6 +8,8 @@ import qualified GhcHead_Config as Ghc
 config :: RunConfig
 config = Ghc.config {
     configId = "ghc-7.4"
+  , sizeList      = [Ref]
+  , tuneList      = [Peak]
   , configBuilder = build
   }
 
@@ -16,9 +18,9 @@ standardGHC = "/Research/git/ghc-7.4/inplace/bin"
 
 build :: ConfigBuilder
 build ConfigTuneDefault ConfigBenchDefault = do
-  setTimeout $ Limit 0 30 0
+  setTimeout $ Limit 0 60 0
   append ConfigureFlags "--ghc-option=-rtsopts"
-                                             
+
   -- Use ghc from standard location off of HOME otherwise
   mbHome <- getEnv "HOME"
   maybe (error "Unable to get HOME path")
